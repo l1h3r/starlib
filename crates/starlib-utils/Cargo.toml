@@ -1,0 +1,21 @@
+[package]
+name = "starlib-utils"
+version = "0.1.0"
+authors = ["l1h3r <5410284+l1h3r@users.noreply.github.com>"]
+categories = []
+description = ""
+documentation = "https://docs.rs/starlib-utils"
+edition = "2024"
+homepage = "https://github.com/l1h3r/starlib"
+keywords = []
+license = "MIT OR Apache-2.0"
+readme = "README.md"
+repository = "https://github.com/l1h3r/starlib"
+rust-version = "1.91"
+
+[lints]
+workspace = true
+
+[dependencies]
+log = { version = "0.4", default-features = false }
+walkdir = { version = "2.5", default-features = false }

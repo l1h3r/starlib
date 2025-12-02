@@ -1,0 +1,2 @@
+[alias]
+generate = "run --release --manifest-path generate-ids/Cargo.toml"

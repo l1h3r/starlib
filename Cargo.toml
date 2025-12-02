@@ -1,0 +1,41 @@
+[package]
+name = "starlib"
+version = "0.1.0"
+authors = ["l1h3r <5410284+l1h3r@users.noreply.github.com>"]
+categories = []
+description = ""
+documentation = "https://docs.rs/starlib"
+edition = "2024"
+homepage = "https://github.com/l1h3r/starlib"
+keywords = []
+license = "MIT OR Apache-2.0"
+readme = "README.md"
+repository = "https://github.com/l1h3r/starlib"
+rust-version = "1.91"
+
+[workspace]
+exclude = [
+  "generate-ids",
+]
+members = [
+  "crates/starlib-command",
+  "crates/starlib-launcher",
+  "crates/starlib-network",
+  "crates/starlib-proto",
+  "crates/starlib-types",
+  "crates/starlib-utils",
+]
+
+[dependencies]
+starlib-command = { version = "=0.1.0", path = "crates/starlib-command" }
+starlib-launcher = { version = "=0.1.0", path = "crates/starlib-launcher" }
+starlib-network = { version = "=0.1.0", path = "crates/starlib-network" }
+starlib-proto = { version = "=0.1.0", path = "crates/starlib-proto" }
+starlib-types = { version = "=0.1.0", path = "crates/starlib-types" }
+starlib-utils = { version = "=0.1.0", path = "crates/starlib-utils" }
+
+[workspace.lints.rust]
+
+[workspace.lints.clippy]
+
+[workspace.lints.rustdoc]

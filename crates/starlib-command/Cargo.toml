@@ -1,0 +1,23 @@
+[package]
+name = "starlib-command"
+version = "0.1.0"
+authors = ["l1h3r <5410284+l1h3r@users.noreply.github.com>"]
+categories = []
+description = ""
+documentation = "https://docs.rs/starlib-command"
+edition = "2024"
+homepage = "https://github.com/l1h3r/starlib"
+keywords = []
+license = "MIT OR Apache-2.0"
+readme = "README.md"
+repository = "https://github.com/l1h3r/starlib"
+rust-version = "1.91"
+
+[lints]
+workspace = true
+
+[dependencies]
+starlib-network = { version = "=0.1.0", path = "../starlib-network" }
+starlib-proto = { version = "=0.1.0", path = "../starlib-proto" }
+starlib-types = { version = "=0.1.0", path = "../starlib-types" }
+starlib-utils = { version = "=0.1.0", path = "../starlib-utils" }
