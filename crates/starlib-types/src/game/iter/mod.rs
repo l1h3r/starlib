@@ -5,6 +5,7 @@ mod traits;
 pub use self::adapters::FilterAlliance;
 pub use self::adapters::FilterBuildComplete;
 pub use self::adapters::FilterBuildPending;
+pub use self::adapters::FilterBuilder;
 pub use self::adapters::FilterDistance;
 pub use self::adapters::FilterEggs;
 pub use self::adapters::FilterHalfSupply;

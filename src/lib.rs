@@ -20,6 +20,11 @@ pub mod proto {
   pub use ::starlib_proto::*;
 }
 
+pub mod runtime {
+  #[doc(inline)]
+  pub use ::starlib_runtime::*;
+}
+
 pub mod types {
   #[doc(inline)]
   pub use ::starlib_types::*;

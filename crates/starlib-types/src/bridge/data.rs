@@ -129,7 +129,11 @@ define_bridge_message! {
 impl UnitTypeData {
   #[inline]
   pub const fn cost(&self) -> Cost {
-    Cost::new(self.mineral_cost, self.vespene_cost, self.food_required)
+    Cost::new(
+      self.mineral_cost,
+      self.vespene_cost,
+      self.food_required.into_f32() as u32,
+    )
   }
 
   #[inline]
@@ -203,7 +207,7 @@ define_bridge_message! {
 impl UpgradeData {
   #[inline]
   pub const fn cost(&self) -> Cost {
-    Cost::new(self.mineral_cost, self.vespene_cost, Float::from_f32(0.))
+    Cost::new(self.mineral_cost, self.vespene_cost, 0)
   }
 }
 

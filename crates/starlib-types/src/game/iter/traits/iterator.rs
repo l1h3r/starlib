@@ -5,6 +5,7 @@ use crate::game::UnitRef;
 use crate::game::iter::FilterAlliance;
 use crate::game::iter::FilterBuildComplete;
 use crate::game::iter::FilterBuildPending;
+use crate::game::iter::FilterBuilder;
 use crate::game::iter::FilterDistance;
 use crate::game::iter::FilterEggs;
 use crate::game::iter::FilterHalfSupply;
@@ -161,6 +162,14 @@ pub trait UnitIter<'a>: Iterator<Item = UnitRef<'a>> {
     Self: Sized,
   {
     FilterType::new(kind, self)
+  }
+
+  #[inline]
+  fn builder_of(self, kind: UnitTypeId) -> FilterBuilder<Self>
+  where
+    Self: Sized,
+  {
+    FilterBuilder::new(kind, self)
   }
 
   define_filter_fn!(FilterTownhalls::townhalls);

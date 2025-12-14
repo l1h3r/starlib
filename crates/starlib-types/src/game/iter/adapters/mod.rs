@@ -1,9 +1,11 @@
 mod filter_alliance;
+mod filter_builder;
 mod filter_distance;
 mod filter_expr;
 mod filter_type;
 
 pub use self::filter_alliance::FilterAlliance;
+pub use self::filter_builder::FilterBuilder;
 pub use self::filter_distance::FilterDistance;
 pub use self::filter_expr::FilterBuildComplete;
 pub use self::filter_expr::FilterBuildPending;

@@ -22,6 +22,7 @@ members = [
   "crates/starlib-launcher",
   "crates/starlib-network",
   "crates/starlib-proto",
+  "crates/starlib-runtime",
   "crates/starlib-types",
   "crates/starlib-utils",
 ]
@@ -31,6 +32,7 @@ starlib-command = { version = "=0.1.0", path = "crates/starlib-command" }
 starlib-launcher = { version = "=0.1.0", path = "crates/starlib-launcher" }
 starlib-network = { version = "=0.1.0", path = "crates/starlib-network" }
 starlib-proto = { version = "=0.1.0", path = "crates/starlib-proto" }
+starlib-runtime = { version = "=0.1.0", path = "crates/starlib-runtime" }
 starlib-types = { version = "=0.1.0", path = "crates/starlib-types" }
 starlib-utils = { version = "=0.1.0", path = "crates/starlib-utils" }
 

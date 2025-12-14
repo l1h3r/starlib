@@ -336,7 +336,7 @@ impl GameState {
         return false;
       }
 
-      if cost.supply().into_f32() > self.food_remaining() as f32 {
+      if cost.supply() > self.food_remaining() {
         return false;
       }
     }

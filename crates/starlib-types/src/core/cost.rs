@@ -3,8 +3,6 @@ use std::fmt::Display;
 use std::fmt::Formatter;
 use std::fmt::Result;
 
-use crate::core::Float;
-
 // -----------------------------------------------------------------------------
 // Cost
 // -----------------------------------------------------------------------------
@@ -13,12 +11,12 @@ use crate::core::Float;
 pub struct Cost {
   minerals: u32,
   vespene: u32,
-  supply: Float,
+  supply: u32,
 }
 
 impl Cost {
   #[inline]
-  pub const fn new(minerals: u32, vespene: u32, supply: Float) -> Self {
+  pub const fn new(minerals: u32, vespene: u32, supply: u32) -> Self {
     Self {
       minerals,
       vespene,
@@ -37,7 +35,7 @@ impl Cost {
   }
 
   #[inline]
-  pub const fn supply(&self) -> Float {
+  pub const fn supply(&self) -> u32 {
     self.supply
   }
 }
