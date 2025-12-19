@@ -34,6 +34,7 @@ use crate::game::Blip;
 use crate::game::CommandQueue;
 use crate::game::GameData;
 use crate::game::GameInfo;
+use crate::game::TempRef;
 use crate::game::UnitIter;
 use crate::game::Units;
 use crate::grid::PixelGrid;
@@ -94,6 +95,7 @@ pub struct GameState {
   // Game State - Units
   // ---------------------------------------------------------------------------
   blips: Vec<Blip>,
+  temps: Vec<Unit>,
   units: Vec<Unit>,
   dead_all: HashSet<UnitTag>,
   dead_now: HashSet<UnitTag>,
@@ -165,6 +167,7 @@ impl GameState {
       map_creep: PixelGrid::new(Default::default()),
 
       blips: Vec::with_capacity(Self::CAP_MD),
+      temps: Vec::with_capacity(Self::CAP_SM),
       units: Vec::with_capacity(Self::CAP_XL),
       dead_all: HashSet::with_capacity(Self::CAP_XL),
       dead_now: HashSet::with_capacity(Self::CAP_MD),
@@ -183,6 +186,7 @@ impl GameState {
 
   pub fn update<const INIT: bool>(&mut self, observation: &Observation) {
     self.blips.clear();
+    self.temps.clear();
     self.units.clear();
 
     self.dead_all.extend(self.dead_now.drain());
@@ -261,14 +265,15 @@ impl GameState {
 
         let core: Unit = unit.clone().into_sc2();
 
+        if matches!(core.display(), DisplayType::Placeholder) {
+          self.temps.push(core);
+          continue;
+        }
+
         self.type_map.insert(core.tag(), core.kind());
         self.tags_set.insert(core.tag());
 
-        if core.display() == DisplayType::Placeholder {
-          println!("TODO: Placeholder");
-        } else {
-          self.units.push(core);
-        }
+        self.units.push(core);
       }
     }
 
@@ -567,6 +572,11 @@ impl GameState {
   #[inline]
   pub const fn blips(&self) -> &[Blip] {
     self.blips.as_slice()
+  }
+
+  #[inline]
+  pub fn temps(&self) -> impl Iterator<Item = TempRef<'_>> {
+    self.temps.iter().map(|unit| TempRef::new(self, unit))
   }
 
   #[inline]
