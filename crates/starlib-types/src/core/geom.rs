@@ -227,13 +227,45 @@ impl<T> Rect<T> {
   pub const fn new(x: T, y: T, w: T, h: T) -> Self {
     Self { x, y, w, h }
   }
+}
+
+impl<T> Rect<T>
+where
+  T: Number,
+{
+  #[inline]
+  pub fn from_point(point: Point<T>, radius: T) -> Self {
+    Self::new(
+      point.x - radius,
+      point.y - radius,
+      radius * T::TWO,
+      radius * T::TWO,
+    )
+  }
 
   #[inline]
-  pub fn center(self) -> Point<T>
-  where
-    T: Number,
-  {
+  pub fn center(self) -> Point<T> {
     Point::new(self.x + self.w / T::TWO, self.y + self.h / T::TWO)
+  }
+
+  #[inline]
+  pub fn x1(&self) -> T {
+    self.x
+  }
+
+  #[inline]
+  pub fn x2(&self) -> T {
+    self.x + self.w
+  }
+
+  #[inline]
+  pub fn y1(&self) -> T {
+    self.y
+  }
+
+  #[inline]
+  pub fn y2(&self) -> T {
+    self.y + self.h
   }
 }
 
