@@ -113,8 +113,8 @@ where
   }
 
   #[inline]
-  const fn to_index(&self, point: PointI) -> usize {
-    (point.x + point.y * self.size.w) as usize
+  const fn to_index(&self, x: i32, y: i32) -> usize {
+    (x + y * self.size.w) as usize
   }
 }
 
@@ -136,6 +136,28 @@ where
   }
 }
 
+impl<P> Index<(i32, i32)> for PixelGrid<P>
+where
+  P: Pixel,
+{
+  type Output = P;
+
+  #[inline]
+  fn index(&self, (x, y): (i32, i32)) -> &Self::Output {
+    P::cast_ref(self.data.index(self.to_index(x, y)))
+  }
+}
+
+impl<P> IndexMut<(i32, i32)> for PixelGrid<P>
+where
+  P: Pixel,
+{
+  #[inline]
+  fn index_mut(&mut self, (x, y): (i32, i32)) -> &mut Self::Output {
+    P::cast_mut(self.data.index_mut(self.to_index(x, y)))
+  }
+}
+
 impl<P> Index<PointI> for PixelGrid<P>
 where
   P: Pixel,
@@ -144,7 +166,7 @@ where
 
   #[inline]
   fn index(&self, index: PointI) -> &Self::Output {
-    P::cast_ref(self.data.index(self.to_index(index)))
+    self.index((index.x, index.y))
   }
 }
 
@@ -154,7 +176,7 @@ where
 {
   #[inline]
   fn index_mut(&mut self, index: PointI) -> &mut Self::Output {
-    P::cast_mut(self.data.index_mut(self.to_index(index)))
+    self.index_mut((index.x, index.y))
   }
 }
 
