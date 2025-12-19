@@ -50,6 +50,11 @@ where
   pub fn distance(self, other: Self) -> T {
     (self - other).length()
   }
+
+  #[inline]
+  pub fn towards(self, other: Self, offset: T) -> Self {
+    self + (other - self) / self.distance(other) * offset
+  }
 }
 
 impl<T> Debug for Point<T>
