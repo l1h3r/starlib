@@ -16,6 +16,8 @@ pub trait Number:
   Copy
   + Debug
   + Display
+  + PartialEq
+  + PartialOrd
   + Add<Output = Self>
   + Sub<Output = Self>
   + Mul<Output = Self>
