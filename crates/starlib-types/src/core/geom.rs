@@ -37,10 +37,7 @@ where
   T: Number,
 {
   #[inline]
-  pub fn dot(self, other: Self) -> T
-  where
-    T: Number,
-  {
+  pub fn dot(self, other: Self) -> T {
     self.x.mul(other.x).add(self.y.mul(other.y))
   }
 
