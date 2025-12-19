@@ -192,7 +192,6 @@ define_bridge_message! {
     assigned_harvesters: i32 = proto::assigned_harvesters,
     ideal_harvesters: i32 = proto::ideal_harvesters,
     weapon_cooldown: Float = proto::weapon_cooldown,
-
     engaged_target_tag: UnitTag = proto::engaged_target_tag,
     buff_duration_remain: i32 = proto::buff_duration_remain,
     buff_duration_max: i32 = proto::buff_duration_max,
