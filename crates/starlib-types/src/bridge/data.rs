@@ -113,10 +113,10 @@ define_bridge_message! {
     has_minerals: bool = proto::has_minerals,
     sight_range: Float = proto::sight_range,
 
-    tech_alias_ids: UnitTypeId vec = proto::tech_alias,
-    unit_alias_id: UnitTypeId = proto::unit_alias,
+    tech_alias: UnitTypeId vec = proto::tech_alias,
+    unit_alias: UnitTypeId = proto::unit_alias,
 
-    tech_requirement_id: UnitTypeId = proto::tech_requirement,
+    tech_requirement: UnitTypeId = proto::tech_requirement,
     require_attached: bool = proto::require_attached,
 
     attributes: Attribute vec = proto::attributes,
