@@ -12,6 +12,13 @@ use crate::grid::Pixel;
 #[repr(transparent)]
 pub struct Block(u8);
 
+impl Block {
+  #[inline]
+  pub const fn get(self) -> u8 {
+    self.0
+  }
+}
+
 impl Pixel for Block {
   type Inner = u8;
 
@@ -42,6 +49,13 @@ impl Pixel for Block {
 #[derive(Clone, Copy)]
 #[repr(transparent)]
 pub struct Height(i8);
+
+impl Height {
+  #[inline]
+  pub const fn get(self) -> i8 {
+    self.0
+  }
+}
 
 impl Pixel for Height {
   type Inner = i8;
