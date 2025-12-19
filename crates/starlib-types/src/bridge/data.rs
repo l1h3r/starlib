@@ -128,7 +128,63 @@ define_bridge_message! {
 
 impl UnitTypeData {
   #[inline]
-  pub const fn cost(&self) -> Cost {
+  pub fn cost(&self) -> Cost {
+    // -------------------------------------------------------------------------
+    // Zergling (Created in Pairs)
+    // -------------------------------------------------------------------------
+
+    if matches!(self.id, UnitTypeId::Zergling) {
+      return Cost::new(50, 0, 1);
+    }
+
+    // -------------------------------------------------------------------------
+    // Zerg - Morph Units
+    // -------------------------------------------------------------------------
+
+    if matches!(self.id, UnitTypeId::Baneling) {
+      return Cost::new(25, 25, 0);
+    }
+
+    if matches!(self.id, UnitTypeId::Ravager) {
+      return Cost::new(25, 75, 1);
+    }
+
+    if matches!(self.id, UnitTypeId::LurkerMP) {
+      return Cost::new(50, 100, 1);
+    }
+
+    if matches!(self.id, UnitTypeId::BroodLord) {
+      return Cost::new(150, 150, 2);
+    }
+
+    if matches!(self.id, UnitTypeId::Overseer) {
+      return Cost::new(50, 0, 0);
+    }
+
+    // -------------------------------------------------------------------------
+    // Zerg - Buildings
+    // -------------------------------------------------------------------------
+
+    if matches!(self.id, UnitTypeId::Lair) {
+      return Cost::new(150, 100, 0);
+    }
+
+    if matches!(self.id, UnitTypeId::Hive) {
+      return Cost::new(200, 150, 0);
+    }
+
+    if matches!(self.id, UnitTypeId::GreaterSpire) {
+      return Cost::new(150, 200, 0);
+    }
+
+    if matches!(self.race, Race::Zerg) && self.is_structure() {
+      return Cost::new(self.mineral_cost - 50, self.vespene_cost, 0);
+    }
+
+    // -------------------------------------------------------------------------
+    // Default Cost
+    // -------------------------------------------------------------------------
+
     Cost::new(
       self.mineral_cost,
       self.vespene_cost,
