@@ -32,7 +32,7 @@ pub struct GameInfo {
   map_region: RectI,
   map_center: PointI,
   // ---------------------------------------------------------------------------
-  // Map Info - Pixel Maps
+  // Map Info - Pixel Grids
   // ---------------------------------------------------------------------------
   pathing_grid: PixelGrid<pixels::Block>,
   placement_grid: PixelGrid<pixels::Block>,
