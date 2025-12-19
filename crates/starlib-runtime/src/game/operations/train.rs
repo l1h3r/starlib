@@ -17,6 +17,42 @@ use crate::game::UnitTracker;
 #[derive(Clone, Copy)]
 pub struct Train(pub UnitTypeId, pub usize);
 
+impl Train {
+  pub const PROTOSS: &'static [UnitTypeId] = &[];
+
+  pub const TERRAN: &'static [UnitTypeId] = &[];
+
+  pub const ZERG: &'static [UnitTypeId] = &[
+    // -------------------------------------------------------------------------
+    // Hatchery Units
+    // -------------------------------------------------------------------------
+    UnitTypeId::Queen,
+    // -------------------------------------------------------------------------
+    // Larva Units
+    // -------------------------------------------------------------------------
+    UnitTypeId::Corruptor,
+    UnitTypeId::Drone,
+    UnitTypeId::Hydralisk,
+    UnitTypeId::Infestor,
+    UnitTypeId::Mutalisk,
+    UnitTypeId::Overlord,
+    UnitTypeId::Roach,
+    UnitTypeId::SwarmHostMP,
+    UnitTypeId::Ultralisk,
+    UnitTypeId::Viper,
+    UnitTypeId::Zergling,
+    // -------------------------------------------------------------------------
+    // Morph Units
+    // -------------------------------------------------------------------------
+    UnitTypeId::Baneling,
+    UnitTypeId::BroodLord,
+    UnitTypeId::LurkerMP,
+    UnitTypeId::OverlordTransport,
+    UnitTypeId::Overseer,
+    UnitTypeId::Ravager,
+  ];
+}
+
 impl Debug for Train {
   fn fmt(&self, f: &mut Formatter<'_>) -> FmtResult {
     write!(f, "Train({}, {})", self.0, self.1)
@@ -33,7 +69,9 @@ impl Operation for Train {
   fn setup(&self) -> Result<(), String> {
     let mut valid: bool = false;
 
-    valid |= Self::ZERG_UNITS.contains(&self.0);
+    valid |= Self::PROTOSS.contains(&self.0);
+    valid |= Self::TERRAN.contains(&self.0);
+    valid |= Self::ZERG.contains(&self.0);
 
     if valid {
       Ok(())
@@ -45,7 +83,7 @@ impl Operation for Train {
   #[inline]
   fn run(&mut self, (state, mut cost_tracker, unit_tracker): <Self::Argv as Argument>::Item<'_>) -> ControlFlow {
     let Some(udata) = state.try_unit(self.0) else {
-      return ControlFlow::Stop;
+      unreachable!()
     };
 
     let mut count: usize = 0;
@@ -71,7 +109,15 @@ impl Operation for Train {
       }
 
       if builder.train(self.0, false) {
-        cost.reserve(&udata);
+        cost_tracker.reserve(&udata);
+
+        println!(
+          "[Train]: {trainee} from {trainer} at {point}",
+          trainee = self.0,
+          trainer = builder.kind(),
+          point = builder.point_2d(),
+        );
+
         break 'train;
       }
     }
