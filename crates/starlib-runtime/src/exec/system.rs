@@ -75,7 +75,7 @@ where
   }
 
   #[inline]
-  fn setup(&mut self, world: &mut World)  -> Result<(), String> {
+  fn setup(&mut self, world: &mut World) -> Result<(), String> {
     <T as System>::setup(self, world)
   }
 }
