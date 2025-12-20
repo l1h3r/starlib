@@ -1,5 +1,4 @@
 use crate::bridge::Alliance;
-use crate::core::PointF;
 use crate::core::UnitTag;
 use crate::game::UnitRef;
 use crate::game::iter::FilterAlliance;
@@ -20,6 +19,7 @@ use crate::game::iter::FilterType;
 use crate::game::iter::FilterVespene;
 use crate::game::iter::FilterWatchtowers;
 use crate::game::iter::FilterWorkers;
+use crate::geom::PointF;
 use crate::stable::UnitTypeId;
 
 macro_rules! define_filter_fn {

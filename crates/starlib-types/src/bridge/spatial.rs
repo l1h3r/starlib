@@ -1,6 +1,6 @@
 use crate::bridge::Image;
-use crate::core::PointI;
-use crate::core::RectI;
+use crate::geom::PointI;
+use crate::geom::RectI;
 use crate::stable::AbilityId;
 
 // -----------------------------------------------------------------------------

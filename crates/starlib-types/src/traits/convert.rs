@@ -4,12 +4,12 @@ use crate::core::Bytes;
 use crate::core::Float;
 use crate::core::Percent;
 use crate::core::PlayerTag;
-use crate::core::Point3DF;
-use crate::core::PointF;
-use crate::core::PointI;
-use crate::core::RectI;
-use crate::core::SizeI;
 use crate::core::UnitTag;
+use crate::geom::Point3DF;
+use crate::geom::PointF;
+use crate::geom::PointI;
+use crate::geom::RectI;
+use crate::geom::SizeI;
 
 // -----------------------------------------------------------------------------
 // From Proto
@@ -328,14 +328,9 @@ impl FromSc2<SizeI> for proto::Size2DI {
 impl FromProto<proto::RectangleI> for RectI {
   #[inline]
   fn from_proto(other: proto::RectangleI) -> Self {
-    let p0: proto::PointI = other.p0.unwrap_or_default();
-    let p1: proto::PointI = other.p1.unwrap_or_default();
-
     Self {
-      x: p0.x,
-      y: p0.y,
-      w: p1.x.strict_sub(p0.x),
-      h: p1.y.strict_sub(p0.y),
+      min: other.p0.unwrap_or_default().into_sc2(),
+      max: other.p1.unwrap_or_default().into_sc2(),
     }
   }
 }
@@ -344,14 +339,8 @@ impl FromSc2<RectI> for proto::RectangleI {
   #[inline]
   fn from_sc2(other: RectI) -> Self {
     proto::RectangleI {
-      p0: Some(proto::PointI {
-        x: other.x,
-        y: other.y,
-      }),
-      p1: Some(proto::PointI {
-        x: other.x.strict_add(other.w),
-        y: other.y.strict_add(other.h),
-      }),
+      p0: Some(other.min.into_proto()),
+      p1: Some(other.max.into_proto()),
     }
   }
 }

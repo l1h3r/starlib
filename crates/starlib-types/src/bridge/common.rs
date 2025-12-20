@@ -1,5 +1,5 @@
 use crate::core::Bytes;
-use crate::core::SizeI;
+use crate::geom::SizeI;
 use crate::stable::AbilityId;
 
 define_bridge_message! {

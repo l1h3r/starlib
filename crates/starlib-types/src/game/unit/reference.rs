@@ -20,14 +20,14 @@ use crate::core::Cost;
 use crate::core::Float;
 use crate::core::Percent;
 use crate::core::PlayerTag;
-use crate::core::Point3DF;
-use crate::core::PointF;
-use crate::core::RectF;
 use crate::core::Stat;
 use crate::core::UnitTag;
 use crate::game::GameState;
 use crate::game::PassengerRef;
 use crate::game::UnitIter;
+use crate::geom::Point3DF;
+use crate::geom::PointF;
+use crate::geom::RectF;
 use crate::stable::AbilityId;
 use crate::stable::BuffId;
 use crate::stable::UnitTypeId;
@@ -105,7 +105,7 @@ impl<'a> TempRef<'a> {
 
   #[inline]
   pub fn point_2d(&self) -> PointF {
-    self.point().into_2d()
+    self.point().to_2d()
   }
 
   #[inline]
@@ -125,7 +125,7 @@ impl<'a> TempRef<'a> {
 
   #[inline]
   pub fn rect(&self) -> RectF {
-    RectF::from_point(self.point_2d(), self.radius())
+    RectF::from_center(self.point_2d(), self.radius())
   }
 }
 
@@ -611,7 +611,7 @@ impl<'a> UnitRef<'a> {
 
   #[inline]
   pub fn point_2d(&self) -> PointF {
-    self.point().into_2d()
+    self.point().to_2d()
   }
 
   #[inline]
@@ -631,7 +631,7 @@ impl<'a> UnitRef<'a> {
 
   #[inline]
   pub fn rect(&self) -> RectF {
-    RectF::from_point(self.point_2d(), self.radius())
+    RectF::from_center(self.point_2d(), self.radius())
   }
 
   // ---------------------------------------------------------------------------

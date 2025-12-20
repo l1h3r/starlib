@@ -12,9 +12,9 @@ use crate::bridge::Score;
 use crate::core::Bytes;
 use crate::core::Float;
 use crate::core::PlayerTag;
-use crate::core::PointF;
-use crate::core::SizeI;
 use crate::core::UnitTag;
+use crate::geom::PointF;
+use crate::geom::SizeI;
 
 // -----------------------------------------------------------------------------
 // Assorted

@@ -7,8 +7,8 @@ use std::ops::IndexMut;
 
 use starlib_proto::ImageData;
 
-use crate::core::PointI;
-use crate::core::SizeI;
+use crate::geom::PointI;
+use crate::geom::SizeI;
 use crate::grid::Pixel;
 use crate::grid::Scalar;
 use crate::traits::FromProto;

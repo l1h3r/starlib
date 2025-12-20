@@ -39,7 +39,7 @@ where
 
   #[inline]
   pub fn percent(&self) -> Percent {
-    Percent::from_f32(self.current.as_f32() / self.maximum.as_f32())
+    Percent::from_f32(self.current.to_f32() / self.maximum.to_f32())
   }
 }
 

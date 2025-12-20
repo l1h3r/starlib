@@ -1,6 +1,6 @@
 use crate::bridge::Target;
-use crate::core::PointF;
 use crate::core::UnitTag;
+use crate::geom::PointF;
 
 impl From<PointF> for Target {
   #[inline]

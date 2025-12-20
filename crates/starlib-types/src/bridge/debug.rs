@@ -1,8 +1,8 @@
 use crate::core::Float;
 use crate::core::PlayerTag;
-use crate::core::Point3DF;
-use crate::core::PointF;
 use crate::core::UnitTag;
+use crate::geom::Point3DF;
+use crate::geom::PointF;
 use crate::stable::UnitTypeId;
 
 define_bridge_message! {

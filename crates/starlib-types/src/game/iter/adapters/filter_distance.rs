@@ -3,8 +3,8 @@ use std::fmt::Formatter;
 use std::fmt::Result;
 use std::iter::FusedIterator;
 
-use crate::core::PointF;
 use crate::game::UnitRef;
+use crate::geom::PointF;
 
 #[derive(Clone)]
 pub struct FilterDistance<I> {

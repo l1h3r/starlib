@@ -2,7 +2,7 @@ use starlib_proto::Unit;
 
 use crate::bridge::Alliance;
 use crate::bridge::DisplayType;
-use crate::core::Point3DF;
+use crate::geom::Point3DF;
 use crate::traits::IntoSc2;
 
 #[derive(Debug)]

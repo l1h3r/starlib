@@ -1,8 +1,8 @@
 use crate::bridge::Ability;
 use crate::bridge::ActionResult;
 use crate::core::Float;
-use crate::core::PointF;
 use crate::core::UnitTag;
+use crate::geom::PointF;
 use crate::stable::AbilityId;
 use crate::stable::UnitTypeId;
 

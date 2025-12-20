@@ -28,7 +28,6 @@ use crate::bridge::Unit;
 use crate::bridge::UnitTypeData;
 use crate::bridge::UpgradeData;
 use crate::core::PlayerTag;
-use crate::core::Point3DF;
 use crate::core::UnitTag;
 use crate::game::Blip;
 use crate::game::CommandQueue;
@@ -37,6 +36,7 @@ use crate::game::GameInfo;
 use crate::game::TempRef;
 use crate::game::UnitIter;
 use crate::game::Units;
+use crate::geom::Point3DF;
 use crate::grid::PixelGrid;
 use crate::grid::pixels;
 use crate::stable::AbilityId;
@@ -298,7 +298,7 @@ impl GameState {
         let point: Point3DF = townhall.point();
 
         if let Some(info) = Arc::get_mut(&mut self.game_info) {
-          info.update(point.into_2d());
+          info.update(point.to_2d());
         } else {
           eprintln!("GameInfo has multiple references");
         }
