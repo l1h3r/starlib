@@ -3,7 +3,6 @@ use std::fmt::Formatter;
 use std::fmt::Result;
 
 use crate::bridge::Passenger;
-use crate::core::Float;
 use crate::core::Stat;
 use crate::core::UnitTag;
 use crate::stable::UnitTypeId;
@@ -39,17 +38,17 @@ impl<'a> PassengerRef<'a> {
   // ---------------------------------------------------------------------------
 
   #[inline]
-  pub fn health(&self) -> Stat<Float> {
+  pub fn health(&self) -> Stat<f32> {
     Stat::new(self.unit.health(), self.unit.health_max())
   }
 
   #[inline]
-  pub fn shield(&self) -> Stat<Float> {
+  pub fn shield(&self) -> Stat<f32> {
     Stat::new(self.unit.shield(), self.unit.shield_max())
   }
 
   #[inline]
-  pub fn energy(&self) -> Stat<Float> {
+  pub fn energy(&self) -> Stat<f32> {
     Stat::new(self.unit.energy(), self.unit.energy_max())
   }
 }

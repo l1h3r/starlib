@@ -114,18 +114,18 @@ impl<'a> TempRef<'a> {
   }
 
   #[inline]
-  pub fn facing(&self) -> Float {
+  pub fn facing(&self) -> f32 {
     self.unit.facing()
   }
 
   #[inline]
-  pub fn radius(&self) -> Float {
+  pub fn radius(&self) -> f32 {
     self.unit.radius()
   }
 
   #[inline]
   pub fn rect(&self) -> RectF {
-    RectF::from_center(self.point_2d(), self.radius())
+    RectF::from_center(self.point_2d(), Float::from_f32(self.radius()))
   }
 }
 
@@ -302,12 +302,12 @@ impl<'a> UnitRef<'a> {
   }
 
   #[inline]
-  pub fn food_required(&self) -> Float {
+  pub fn food_required(&self) -> f32 {
     self.data.food_required()
   }
 
   #[inline]
-  pub fn food_provided(&self) -> Float {
+  pub fn food_provided(&self) -> f32 {
     self.data.food_provided()
   }
 
@@ -323,7 +323,7 @@ impl<'a> UnitRef<'a> {
 
   #[inline]
   pub fn build_time(&self) -> Duration {
-    Duration::from_secs_f32(self.data.build_time().into_f32())
+    Duration::from_secs_f32(self.data.build_time())
   }
 
   #[inline]
@@ -337,7 +337,7 @@ impl<'a> UnitRef<'a> {
   }
 
   #[inline]
-  pub fn sight_range(&self) -> Float {
+  pub fn sight_range(&self) -> f32 {
     self.data.sight_range()
   }
 
@@ -382,12 +382,12 @@ impl<'a> UnitRef<'a> {
   }
 
   #[inline]
-  pub fn speed(&self) -> Float {
+  pub fn speed(&self) -> f32 {
     self.data.movement_speed()
   }
 
   #[inline]
-  pub fn armor(&self) -> Float {
+  pub fn armor(&self) -> f32 {
     self.data.armor()
   }
 
@@ -620,18 +620,18 @@ impl<'a> UnitRef<'a> {
   }
 
   #[inline]
-  pub fn facing(&self) -> Float {
+  pub fn facing(&self) -> f32 {
     self.unit.facing()
   }
 
   #[inline]
-  pub fn radius(&self) -> Float {
+  pub fn radius(&self) -> f32 {
     self.unit.radius()
   }
 
   #[inline]
   pub fn rect(&self) -> RectF {
-    RectF::from_center(self.point_2d(), self.radius())
+    RectF::from_center(self.point_2d(), Float::from_f32(self.radius()))
   }
 
   // ---------------------------------------------------------------------------
@@ -640,7 +640,7 @@ impl<'a> UnitRef<'a> {
 
   #[inline]
   pub fn build_progress(&self) -> Percent {
-    self.unit.progress()
+    Percent::from_f32(self.unit.progress())
   }
 
   #[inline]
@@ -682,12 +682,12 @@ impl<'a> UnitRef<'a> {
   // ---------------------------------------------------------------------------
 
   #[inline]
-  pub fn detect_range(&self) -> Float {
+  pub fn detect_range(&self) -> f32 {
     self.unit.detect_range()
   }
 
   #[inline]
-  pub fn radar_range(&self) -> Float {
+  pub fn radar_range(&self) -> f32 {
     self.unit.radar_range()
   }
 
@@ -740,17 +740,17 @@ impl<'a> UnitRef<'a> {
   // ---------------------------------------------------------------------------
 
   #[inline]
-  pub fn health(&self) -> Stat<Float> {
+  pub fn health(&self) -> Stat<f32> {
     Stat::new(self.unit.health(), self.unit.health_max())
   }
 
   #[inline]
-  pub fn shield(&self) -> Stat<Float> {
+  pub fn shield(&self) -> Stat<f32> {
     Stat::new(self.unit.shield(), self.unit.shield_max())
   }
 
   #[inline]
-  pub fn energy(&self) -> Stat<Float> {
+  pub fn energy(&self) -> Stat<f32> {
     Stat::new(self.unit.energy(), self.unit.energy_max())
   }
 
@@ -852,7 +852,7 @@ impl<'a> UnitRef<'a> {
   }
 
   #[inline]
-  pub fn weapon_cooldown(&self) -> Float {
+  pub fn weapon_cooldown(&self) -> f32 {
     self.unit.weapon_cooldown()
   }
 

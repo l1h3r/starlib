@@ -1,4 +1,3 @@
-use crate::core::Float;
 use crate::core::PlayerTag;
 use crate::core::UnitTag;
 use crate::geom::Point3DF;
@@ -87,7 +86,7 @@ define_bridge_message! {
   pub struct DebugSphere {
     color: Color ref = proto::color,
     point: Point3DF = proto::p,
-    radius: Float = proto::r,
+    radius: f32 = proto::r,
   }
 }
 
@@ -146,7 +145,7 @@ define_bridge_message! {
 define_bridge_message! {
   #[bridge(DebugSetScore)]
   pub struct DebugSetScore {
-    score: Float = proto::score,
+    score: f32 = proto::score,
   }
 }
 
@@ -178,7 +177,7 @@ define_bridge_message! {
   #[bridge(DebugSetUnitValue)]
   pub struct DebugSetUnitValue {
     unit_value: UnitValue = proto::unit_value,
-    value: Float = proto::value,
+    value: f32 = proto::value,
     unit_tag: UnitTag = proto::unit_tag,
   }
 }

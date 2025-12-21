@@ -1,5 +1,3 @@
-use crate::core::Float;
-
 define_bridge_enum! {
   #[bridge(ScoreType, NULL = Melee)]
   pub enum ScoreType {
@@ -20,43 +18,43 @@ define_bridge_message! {
 define_bridge_message! {
   #[bridge(CategoryScoreDetails)]
   pub struct CategoryScore {
-    none: Float = proto::none,
-    army: Float = proto::army,
-    economy: Float = proto::economy,
-    technology: Float = proto::technology,
-    upgrade: Float = proto::upgrade,
+    none: f32 = proto::none,
+    army: f32 = proto::army,
+    economy: f32 = proto::economy,
+    technology: f32 = proto::technology,
+    upgrade: f32 = proto::upgrade,
   }
 }
 
 define_bridge_message! {
   #[bridge(VitalScoreDetails)]
   pub struct VitalScore {
-    life: Float = proto::life,
-    shields: Float = proto::shields,
-    energy: Float = proto::energy,
+    life: f32 = proto::life,
+    shields: f32 = proto::shields,
+    energy: f32 = proto::energy,
   }
 }
 
 define_bridge_message! {
   #[bridge(ScoreDetails)]
   pub struct ScoreInfo {
-    idle_production_time: Float = proto::idle_production_time,
-    idle_worker_time: Float = proto::idle_worker_time,
+    idle_production_time: f32 = proto::idle_production_time,
+    idle_worker_time: f32 = proto::idle_worker_time,
 
-    total_value_units: Float = proto::total_value_units,
-    total_value_structures: Float = proto::total_value_structures,
+    total_value_units: f32 = proto::total_value_units,
+    total_value_structures: f32 = proto::total_value_structures,
 
-    killed_value_units: Float = proto::killed_value_units,
-    killed_value_structures: Float = proto::killed_value_structures,
+    killed_value_units: f32 = proto::killed_value_units,
+    killed_value_structures: f32 = proto::killed_value_structures,
 
-    collected_minerals: Float = proto::collected_minerals,
-    collected_vespene: Float = proto::collected_vespene,
+    collected_minerals: f32 = proto::collected_minerals,
+    collected_vespene: f32 = proto::collected_vespene,
 
-    collection_rate_minerals: Float = proto::collection_rate_minerals,
-    collection_rate_vespene: Float = proto::collection_rate_vespene,
+    collection_rate_minerals: f32 = proto::collection_rate_minerals,
+    collection_rate_vespene: f32 = proto::collection_rate_vespene,
 
-    spent_minerals: Float = proto::spent_minerals,
-    spent_vespene: Float = proto::spent_vespene,
+    spent_minerals: f32 = proto::spent_minerals,
+    spent_vespene: f32 = proto::spent_vespene,
 
     food_used: CategoryScore ref = proto::food_used,
 
@@ -80,7 +78,7 @@ define_bridge_message! {
 
     total_healed: VitalScore ref = proto::total_healed,
 
-    current_apm: Float = proto::current_apm,
-    current_effective_apm: Float = proto::current_effective_apm,
+    current_apm: f32 = proto::current_apm,
+    current_effective_apm: f32 = proto::current_effective_apm,
   }
 }

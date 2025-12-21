@@ -10,7 +10,6 @@ use crate::bridge::ObservationUI;
 use crate::bridge::Race;
 use crate::bridge::Score;
 use crate::core::Bytes;
-use crate::core::Float;
 use crate::core::PlayerTag;
 use crate::core::UnitTag;
 use crate::geom::PointF;
@@ -129,7 +128,7 @@ define_bridge_message! {
   pub struct SpatialCamera {
     resolution: SizeI = proto::resolution,
     minimap_resolution: SizeI = proto::minimap_resolution,
-    width: Float = proto::width,
+    width: f32 = proto::width,
     crop_to_playable_area: bool = proto::crop_to_playable_area,
     allow_cheating_layers: bool = proto::allow_cheating_layers,
   }
@@ -266,7 +265,7 @@ define_bridge_message! {
   #[bridge(ActionObserverCameraMove)]
   pub struct ActionObserverCameraMove {
     world_pos: PointF = proto::world_pos,
-    distance: Float = proto::distance,
+    distance: f32 = proto::distance,
   }
 }
 

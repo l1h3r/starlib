@@ -1,6 +1,5 @@
 use crate::bridge::Race;
 use crate::core::Cost;
-use crate::core::Float;
 use crate::stable::AbilityId;
 use crate::stable::BuffId;
 use crate::stable::EffectId;
@@ -33,9 +32,9 @@ define_bridge_message! {
     allow_minimap: bool = proto::allow_minimap,
     allow_autocast: bool = proto::allow_autocast,
     is_building: bool = proto::is_building,
-    footprint_radius: Float = proto::footprint_radius,
+    footprint_radius: f32 = proto::footprint_radius,
     is_instant_placement: bool = proto::is_instant_placement,
-    cast_range: Float = proto::cast_range,
+    cast_range: f32 = proto::cast_range,
   }
 }
 
@@ -70,7 +69,7 @@ define_bridge_message! {
   #[bridge(DamageBonus)]
   pub struct DamageBonus {
     attribute: Attribute = proto::attribute,
-    bonus: Float = proto::bonus,
+    bonus: f32 = proto::bonus,
   }
 }
 
@@ -87,11 +86,11 @@ define_bridge_message! {
   #[bridge(Weapon)]
   pub struct Weapon {
     target: TargetType = proto::target,
-    damage: Float = proto::damage,
+    damage: f32 = proto::damage,
     damage_bonus: DamageBonus ref = proto::damage_bonus,
     attacks: u32 = proto::attacks,
-    range: Float = proto::range,
-    speed: Float = proto::speed,
+    range: f32 = proto::range,
+    speed: f32 = proto::speed,
   }
 }
 
@@ -104,14 +103,14 @@ define_bridge_message! {
     cargo_size: u32 = proto::cargo_size,
     mineral_cost: u32 = proto::mineral_cost,
     vespene_cost: u32 = proto::vespene_cost,
-    food_required: Float = proto::food_required,
-    food_provided: Float = proto::food_provided,
+    food_required: f32 = proto::food_required,
+    food_provided: f32 = proto::food_provided,
     ability_id: AbilityId = proto::ability_id,
     race: Race = proto::race,
-    build_time: Float = proto::build_time,
+    build_time: f32 = proto::build_time,
     has_vespene: bool = proto::has_vespene,
     has_minerals: bool = proto::has_minerals,
-    sight_range: Float = proto::sight_range,
+    sight_range: f32 = proto::sight_range,
 
     tech_alias: UnitTypeId vec = proto::tech_alias,
     unit_alias: UnitTypeId = proto::unit_alias,
@@ -120,8 +119,8 @@ define_bridge_message! {
     require_attached: bool = proto::require_attached,
 
     attributes: Attribute vec = proto::attributes,
-    movement_speed: Float = proto::movement_speed,
-    armor: Float = proto::armor,
+    movement_speed: f32 = proto::movement_speed,
+    armor: f32 = proto::armor,
     weapons: Weapon vec = proto::weapons,
   }
 }
@@ -185,11 +184,7 @@ impl UnitTypeData {
     // Default Cost
     // -------------------------------------------------------------------------
 
-    Cost::new(
-      self.mineral_cost,
-      self.vespene_cost,
-      self.food_required.into_f32() as u32,
-    )
+    Cost::new(self.mineral_cost, self.vespene_cost, self.food_required as u32)
   }
 
   #[inline]
@@ -255,7 +250,7 @@ define_bridge_message! {
     name: String = proto::name,
     mineral_cost: u32 = proto::mineral_cost,
     vespene_cost: u32 = proto::vespene_cost,
-    research_time: Float = proto::research_time,
+    research_time: f32 = proto::research_time,
     ability_id: AbilityId = proto::ability_id,
   }
 }
@@ -281,6 +276,6 @@ define_bridge_message! {
     id: EffectId = proto::effect_id,
     name: String = proto::name,
     friendly_name: String = proto::friendly_name,
-    radius: Float = proto::radius,
+    radius: f32 = proto::radius,
   }
 }

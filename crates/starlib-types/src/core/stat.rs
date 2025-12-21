@@ -23,22 +23,28 @@ impl<T> Stat<T> {
   }
 }
 
-impl<T> Stat<T>
-where
-  T: Number,
-{
+impl<T> Stat<T> {
   #[inline]
-  pub const fn current(&self) -> T {
+  pub const fn current(&self) -> T
+  where
+    T: Copy,
+  {
     self.current
   }
 
   #[inline]
-  pub const fn maximum(&self) -> T {
+  pub const fn maximum(&self) -> T
+  where
+    T: Copy,
+  {
     self.maximum
   }
 
   #[inline]
-  pub fn percent(&self) -> Percent {
+  pub fn percent(&self) -> Percent
+  where
+    T: Number,
+  {
     Percent::from_f32(self.current.to_f32() / self.maximum.to_f32())
   }
 }

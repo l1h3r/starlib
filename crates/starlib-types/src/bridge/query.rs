@@ -1,6 +1,5 @@
 use crate::bridge::Ability;
 use crate::bridge::ActionResult;
-use crate::core::Float;
 use crate::core::UnitTag;
 use crate::geom::PointF;
 use crate::stable::AbilityId;
@@ -27,7 +26,7 @@ define_bridge_message! {
 define_bridge_message! {
   #[bridge(ResponseQueryPathing)]
   pub struct ResponseQueryPathing {
-    distance: Float = proto::distance,
+    distance: f32 = proto::distance,
   }
 }
 

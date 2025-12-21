@@ -1,6 +1,4 @@
 use crate::bridge::Image;
-use crate::core::Float;
-use crate::core::Percent;
 use crate::core::PlayerTag;
 use crate::core::UnitTag;
 use crate::geom::Point3DF;
@@ -49,7 +47,7 @@ define_bridge_message! {
   #[bridge(RadarRing)]
   pub struct RadarRing {
     point: Point3DF = proto::pos,
-    radius: Float = proto::radius,
+    radius: f32 = proto::radius,
   }
 }
 
@@ -57,7 +55,7 @@ define_bridge_message! {
   #[bridge(PowerSource)]
   pub struct PowerSource {
     point: Point3DF = proto::pos,
-    radius: Float = proto::radius,
+    radius: f32 = proto::radius,
     tag: UnitTag = proto::tag,
   }
 }
@@ -86,7 +84,7 @@ define_bridge_message! {
   pub struct UnitOrder {
     ability_id: AbilityId = proto::ability_id,
     target: Target ref = proto::target,
-    progress: Percent = proto::progress,
+    progress: f32 = proto::progress,
   }
 }
 
@@ -126,12 +124,12 @@ define_bridge_message! {
   pub struct Passenger {
     kind: UnitTypeId = proto::unit_type,
     tag: UnitTag = proto::tag,
-    health: Float = proto::health,
-    health_max: Float = proto::health_max,
-    shield: Float = proto::shield,
-    shield_max: Float = proto::shield_max,
-    energy: Float = proto::energy,
-    energy_max: Float = proto::energy_max,
+    health: f32 = proto::health,
+    health_max: f32 = proto::health_max,
+    shield: f32 = proto::shield,
+    shield_max: f32 = proto::shield_max,
+    energy: f32 = proto::energy,
+    energy_max: f32 = proto::energy_max,
   }
 }
 
@@ -154,14 +152,14 @@ define_bridge_message! {
     owner: PlayerTag = proto::owner,
 
     point: Point3DF = proto::pos,
-    facing: Float = proto::facing,
-    radius: Float = proto::radius,
-    progress: Percent = proto::build_progress,
+    facing: f32 = proto::facing,
+    radius: f32 = proto::radius,
+    progress: f32 = proto::build_progress,
     cloak: CloakState = proto::cloak,
     buff_ids: BuffId vec = proto::buff_ids,
 
-    detect_range: Float = proto::detect_range,
-    radar_range: Float = proto::radar_range,
+    detect_range: f32 = proto::detect_range,
+    radar_range: f32 = proto::radar_range,
 
     is_selected: bool = proto::is_selected,
     is_on_screen: bool = proto::is_on_screen,
@@ -172,12 +170,12 @@ define_bridge_message! {
     armor_upgrade_level: i32 = proto::armor_upgrade_level,
     shield_upgrade_level: i32 = proto::shield_upgrade_level,
 
-    health: Float = proto::health,
-    health_max: Float = proto::health_max,
-    shield: Float = proto::shield,
-    shield_max: Float = proto::shield_max,
-    energy: Float = proto::energy,
-    energy_max: Float = proto::energy_max,
+    health: f32 = proto::health,
+    health_max: f32 = proto::health_max,
+    shield: f32 = proto::shield,
+    shield_max: f32 = proto::shield_max,
+    energy: f32 = proto::energy,
+    energy_max: f32 = proto::energy_max,
     mineral_contents: i32 = proto::mineral_contents,
     vespene_contents: i32 = proto::vespene_contents,
     is_flying: bool = proto::is_flying,
@@ -191,7 +189,7 @@ define_bridge_message! {
     cargo_space_max: i32 = proto::cargo_space_max,
     assigned_harvesters: i32 = proto::assigned_harvesters,
     ideal_harvesters: i32 = proto::ideal_harvesters,
-    weapon_cooldown: Float = proto::weapon_cooldown,
+    weapon_cooldown: f32 = proto::weapon_cooldown,
     engaged_target_tag: UnitTag = proto::engaged_target_tag,
     buff_duration_remain: i32 = proto::buff_duration_remain,
     buff_duration_max: i32 = proto::buff_duration_max,
@@ -221,7 +219,7 @@ define_bridge_message! {
     point: PointF vec = proto::pos,
     alliance: Alliance = proto::alliance,
     owner: PlayerTag = proto::owner,
-    radius: Float = proto::radius,
+    radius: f32 = proto::radius,
   }
 }
 

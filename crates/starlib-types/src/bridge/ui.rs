@@ -1,5 +1,3 @@
-use crate::core::Float;
-use crate::core::Percent;
 use crate::core::PlayerTag;
 use crate::stable::AbilityId;
 use crate::stable::BuffId;
@@ -46,7 +44,7 @@ define_bridge_message! {
     shields: i32 = proto::shields,
     energy: i32 = proto::energy,
     transport_slots_taken: i32 = proto::transport_slots_taken,
-    build_progress: Percent = proto::build_progress,
+    build_progress: f32 = proto::build_progress,
     add_on: Self = proto::add_on,
     max_health: i32 = proto::max_health,
     max_shields: i32 = proto::max_shields,
@@ -85,7 +83,7 @@ define_bridge_message! {
   #[bridge(BuildItem)]
   pub struct BuildItem {
     ability_id: AbilityId = proto::ability_id,
-    build_progress: Float = proto::build_progress,
+    build_progress: f32 = proto::build_progress,
   }
 }
 
