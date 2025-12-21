@@ -110,7 +110,7 @@ impl<'a> TempRef<'a> {
 
   #[inline]
   pub fn in_range(&self, point: PointF, range: f32) -> bool {
-    self.point_2d().distance(point) <= range
+    self.point_2d().distance_squared(point) <= range * range
   }
 
   #[inline]
@@ -616,7 +616,7 @@ impl<'a> UnitRef<'a> {
 
   #[inline]
   pub fn in_range(&self, point: PointF, range: f32) -> bool {
-    self.point_2d().distance(point) <= range
+    self.point_2d().distance_squared(point) <= range * range
   }
 
   #[inline]
