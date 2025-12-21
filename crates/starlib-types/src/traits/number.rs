@@ -37,6 +37,7 @@ pub trait Euclid {
 
 pub trait Pi {
   const PI: Self;
+  const PI2: Self;
 }
 
 pub trait Ceil {
@@ -172,6 +173,7 @@ impl Euclid for f32 {
 
 impl Pi for f32 {
   const PI: Self = ::core::f32::consts::PI;
+  const PI2: Self = ::core::f32::consts::PI * 2.0;
 }
 
 impl Ceil for f32 {
@@ -282,6 +284,7 @@ impl Euclid for Float {
 
 impl Pi for Float {
   const PI: Self = Float::from_f32(<f32 as Pi>::PI);
+  const PI2: Self = Float::from_f32(<f32 as Pi>::PI2);
 }
 
 impl Ceil for Float {

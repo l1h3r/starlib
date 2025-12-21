@@ -33,6 +33,9 @@ pub use self::game::UnitRef;
 pub use self::game::Units;
 pub use self::game::iter;
 
+pub use self::geom::Angle;
+pub use self::geom::AngleF;
+pub use self::geom::AngleI;
 pub use self::geom::Point;
 pub use self::geom::Point3D;
 pub use self::geom::Point3DF;
@@ -45,6 +48,9 @@ pub use self::geom::RectI;
 pub use self::geom::Size;
 pub use self::geom::SizeF;
 pub use self::geom::SizeI;
+pub use self::geom::Transform;
+pub use self::geom::TransformF;
+pub use self::geom::TransformI;
 
 pub use self::grid::Pixel;
 pub use self::grid::PixelGrid;
