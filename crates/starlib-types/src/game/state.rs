@@ -298,7 +298,7 @@ impl GameState {
         let point: Point3DF = townhall.point();
 
         if let Some(info) = Arc::get_mut(&mut self.game_info) {
-          info.update(point.to_2d());
+          info.update(point.xy());
         } else {
           eprintln!("GameInfo has multiple references");
         }

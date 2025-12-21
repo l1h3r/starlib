@@ -28,6 +28,7 @@ use starlib_types::GameInfo;
 use starlib_types::GameResult;
 use starlib_types::GameState;
 use starlib_types::IntoSc2;
+use starlib_types::Percent;
 use starlib_types::PlayerTag;
 use starlib_types::Race;
 use starlib_types::UnitIter;
@@ -48,9 +49,9 @@ use crate::error::CommandError;
 
 struct UnitFrame {
   kind: UnitTypeId,
-  health: Float,
-  shield: Float,
-  progress: Float,
+  health: f32,
+  shield: f32,
+  progress: Percent,
 }
 
 impl UnitFrame {
@@ -60,7 +61,7 @@ impl UnitFrame {
       kind: unit.kind(),
       health: unit.health().current(),
       shield: unit.shield().current(),
-      progress: *unit.build_progress(),
+      progress: unit.build_progress(),
     }
   }
 }
@@ -301,8 +302,8 @@ where
         }
 
         if unit.health().current() < frame.health || unit.shield().current() < frame.shield {
-          let dmg_health: Float = frame.health - unit.health().current();
-          let dmg_shield: Float = frame.shield - unit.shield().current();
+          let dmg_health: Float = Float::from_f32(frame.health - unit.health().current());
+          let dmg_shield: Float = Float::from_f32(frame.shield - unit.shield().current());
 
           agent.on_event(Event::UnitDamaged(unit, dmg_health, dmg_shield))?;
         }

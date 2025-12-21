@@ -1,7 +1,7 @@
-use std::fmt::Debug;
-use std::fmt::Display;
-use std::fmt::Formatter;
-use std::fmt::Result;
+use core::fmt::Debug;
+use core::fmt::Display;
+use core::fmt::Formatter;
+use core::fmt::Result;
 
 use crate::core::Float;
 use crate::geom::Angle;
@@ -9,9 +9,6 @@ use crate::geom::Point;
 use crate::traits::Cos;
 use crate::traits::Number;
 use crate::traits::Sin;
-
-pub type TransformF = Transform<Float>;
-pub type TransformI = Transform<i32>;
 
 #[derive(Clone, Copy, Hash, PartialEq, Eq, PartialOrd, Ord)]
 #[repr(C)]
@@ -69,21 +66,6 @@ where
   }
 
   #[inline]
-  pub fn determinant(&self) -> T {
-    self.m11 * self.m22 - self.m12 * self.m21
-  }
-
-  #[inline]
-  pub fn is_invertible(&self) -> bool {
-    self.determinant() != T::ZERO
-  }
-
-  #[inline]
-  pub fn is_identity(&self) -> bool {
-    *self == Self::IDENTITY
-  }
-
-  #[inline]
   pub fn then(&self, other: &Self) -> Self {
     Self::new(
       self.m11 * other.m11 + self.m12 * other.m21,
@@ -96,7 +78,7 @@ where
   }
 
   #[inline]
-  pub fn transform_point(&self, point: Point<T>) -> Point<T> {
+  pub fn transform(&self, point: Point<T>) -> Point<T> {
     Point::new(
       point.x * self.m11 + point.y * self.m21 + self.m31,
       point.x * self.m12 + point.y * self.m22 + self.m32,
@@ -109,18 +91,6 @@ where
   }
 
   #[inline]
-  pub fn to_f32(self) -> Transform<f32> {
-    Transform::new(
-      self.m11.to_f32(),
-      self.m12.to_f32(),
-      self.m21.to_f32(),
-      self.m22.to_f32(),
-      self.m31.to_f32(),
-      self.m32.to_f32(),
-    )
-  }
-
-  #[inline]
   pub fn to_i32(self) -> Transform<i32> {
     Transform::new(
       self.m11.to_i32(),
@@ -129,6 +99,18 @@ where
       self.m22.to_i32(),
       self.m31.to_i32(),
       self.m32.to_i32(),
+    )
+  }
+
+  #[inline]
+  pub fn to_f32(self) -> Transform<f32> {
+    Transform::new(
+      self.m11.to_f32(),
+      self.m12.to_f32(),
+      self.m21.to_f32(),
+      self.m22.to_f32(),
+      self.m31.to_f32(),
+      self.m32.to_f32(),
     )
   }
 
@@ -150,15 +132,11 @@ where
   T: Number,
 {
   fn fmt(&self, f: &mut Formatter<'_>) -> Result {
-    if self.is_identity() {
-      f.write_str("Transform[I]")
-    } else {
-      write!(
-        f,
-        "Transform[{},{},{},{},{},{}]",
-        self.m11, self.m12, self.m21, self.m22, self.m31, self.m32
-      )
-    }
+    write!(
+      f,
+      "Transform<{},{},{},{},{},{}>",
+      self.m11, self.m12, self.m21, self.m22, self.m31, self.m32
+    )
   }
 }
 
@@ -167,14 +145,6 @@ where
   T: Number,
 {
   fn fmt(&self, f: &mut Formatter<'_>) -> Result {
-    if self.is_identity() {
-      f.write_str("[I]")
-    } else {
-      write!(
-        f,
-        "[{},{},{},{},{},{}]",
-        self.m11, self.m12, self.m21, self.m22, self.m31, self.m32
-      )
-    }
+    Debug::fmt(self, f)
   }
 }

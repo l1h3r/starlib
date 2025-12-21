@@ -81,7 +81,10 @@ impl Operation for Train {
   }
 
   #[inline]
-  fn run(&mut self, (state, mut cost_tracker, unit_tracker): <Self::Argv as Argument>::Item<'_>) -> ControlFlow {
+  fn run(
+    &mut self,
+    (state, mut cost_tracker, unit_tracker): <Self::Argv as Argument>::Item<'_>,
+  ) -> ControlFlow {
     let Some(udata) = state.try_unit(self.0) else {
       unreachable!()
     };

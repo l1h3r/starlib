@@ -1,7 +1,7 @@
-use std::fmt::Debug;
-use std::fmt::Display;
-use std::fmt::Formatter;
-use std::fmt::Result;
+use core::fmt::Debug;
+use core::fmt::Display;
+use core::fmt::Formatter;
+use core::fmt::Result;
 
 use crate::core::Float;
 use crate::geom::Point3D;
@@ -11,9 +11,6 @@ use crate::traits::Floor;
 use crate::traits::Number;
 use crate::traits::Round;
 use crate::traits::Sqrt;
-
-pub type PointF = Point<Float>;
-pub type PointI = Point<i32>;
 
 #[derive(Clone, Copy, Hash, PartialEq, Eq, PartialOrd, Ord)]
 #[repr(C)]
@@ -54,6 +51,11 @@ where
   }
 
   #[inline]
+  pub const fn yx(self) -> Self {
+    Self::new(self.y, self.x)
+  }
+
+  #[inline]
   pub fn dot(self, other: Self) -> T {
     (self.x * other.x) + (self.y * other.y)
   }
@@ -90,19 +92,11 @@ where
   }
 
   #[inline]
-  pub fn div_euclid(self, other: Self) -> Self
+  pub fn towards(self, other: Self, offset: T) -> Self
   where
-    T: Euclid,
+    T: Sqrt,
   {
-    Self::new(self.x.div_euclid(other.x), self.y.div_euclid(other.y))
-  }
-
-  #[inline]
-  pub fn rem_euclid(self, other: Self) -> Self
-  where
-    T: Euclid,
-  {
-    Self::new(self.x.rem_euclid(other.x), self.y.rem_euclid(other.y))
+    self + (other - self) / self.distance(other) * offset
   }
 
   #[inline]
@@ -140,11 +134,29 @@ where
   }
 
   #[inline]
-  pub fn towards(self, other: Self, offset: T) -> Self
+  pub fn clamp(self, min: Self, max: Self) -> Self {
+    self.max(min).min(max)
+  }
+
+  #[inline]
+  pub fn div_euclid(self, other: Self) -> Self
   where
-    T: Sqrt,
+    T: Euclid,
   {
-    self + (other - self) / self.distance(other) * offset
+    Self::new(self.x.div_euclid(other.x), self.y.div_euclid(other.y))
+  }
+
+  #[inline]
+  pub fn rem_euclid(self, other: Self) -> Self
+  where
+    T: Euclid,
+  {
+    Self::new(self.x.rem_euclid(other.x), self.y.rem_euclid(other.y))
+  }
+
+  #[inline]
+  pub const fn to_3d(self) -> Point3D<T> {
+    Point3D::new(self.x, self.y, T::ZERO)
   }
 
   #[inline]
@@ -153,23 +165,18 @@ where
   }
 
   #[inline]
-  pub fn to_f32(self) -> Point<f32> {
-    Point::new(self.x.to_f32(), self.y.to_f32())
-  }
-
-  #[inline]
   pub fn to_i32(self) -> Point<i32> {
     Point::new(self.x.to_i32(), self.y.to_i32())
   }
 
   #[inline]
-  pub fn to_float(self) -> Point<Float> {
-    Point::new(self.x.to_float(), self.y.to_float())
+  pub fn to_f32(self) -> Point<f32> {
+    Point::new(self.x.to_f32(), self.y.to_f32())
   }
 
   #[inline]
-  pub const fn to_3d(self) -> Point3D<T> {
-    Point3D::new(self.x, self.y, T::ZERO)
+  pub fn to_float(self) -> Point<Float> {
+    Point::new(self.x.to_float(), self.y.to_float())
   }
 }
 
@@ -188,7 +195,7 @@ where
   T: Number,
 {
   fn fmt(&self, f: &mut Formatter<'_>) -> Result {
-    write!(f, "Point[{},{}]", self.x, self.y)
+    write!(f, "Point<{},{}>", self.x, self.y)
   }
 }
 
@@ -197,7 +204,7 @@ where
   T: Number,
 {
   fn fmt(&self, f: &mut Formatter<'_>) -> Result {
-    write!(f, "[{},{}]", self.x, self.y)
+    Debug::fmt(self, f)
   }
 }
 

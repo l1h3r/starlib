@@ -9,8 +9,8 @@ use std::ops::Sub;
 use crate::core::Float;
 
 pub trait Cast {
-  fn to_f32(self) -> f32;
   fn to_i32(self) -> i32;
+  fn to_f32(self) -> f32;
   fn to_float(self) -> Float;
 }
 
@@ -125,13 +125,13 @@ where
 
 impl Cast for f32 {
   #[inline]
-  fn to_f32(self) -> f32 {
-    self
+  fn to_i32(self) -> i32 {
+    self as i32
   }
 
   #[inline]
-  fn to_i32(self) -> i32 {
-    self as i32
+  fn to_f32(self) -> f32 {
+    self
   }
 
   #[inline]
@@ -236,13 +236,13 @@ impl Radian for f32 {
 
 impl Cast for Float {
   #[inline]
-  fn to_f32(self) -> f32 {
-    *self
+  fn to_i32(self) -> i32 {
+    <f32 as Cast>::to_i32(*self)
   }
 
   #[inline]
-  fn to_i32(self) -> i32 {
-    <f32 as Cast>::to_i32(*self)
+  fn to_f32(self) -> f32 {
+    *self
   }
 
   #[inline]
@@ -347,13 +347,13 @@ impl Radian for Float {
 
 impl Cast for i32 {
   #[inline]
-  fn to_f32(self) -> f32 {
-    self as f32
+  fn to_i32(self) -> i32 {
+    self
   }
 
   #[inline]
-  fn to_i32(self) -> i32 {
-    self
+  fn to_f32(self) -> f32 {
+    self as f32
   }
 
   #[inline]

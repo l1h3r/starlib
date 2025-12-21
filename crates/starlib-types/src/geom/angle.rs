@@ -1,8 +1,8 @@
-use std::fmt::Debug;
-use std::fmt::Display;
-use std::fmt::Formatter;
-use std::fmt::Result;
-use std::ops::Neg;
+use core::fmt::Debug;
+use core::fmt::Display;
+use core::fmt::Formatter;
+use core::fmt::Result;
+use core::ops::Neg;
 
 use crate::core::Float;
 use crate::traits::Cos;
@@ -10,9 +10,6 @@ use crate::traits::Number;
 use crate::traits::Pi;
 use crate::traits::Radian;
 use crate::traits::Sin;
-
-pub type AngleF = Angle<Float>;
-pub type AngleI = Angle<i32>;
 
 #[derive(Clone, Copy, Hash, PartialEq, Eq, PartialOrd, Ord)]
 #[repr(C)]
@@ -24,19 +21,19 @@ impl<T> Angle<T>
 where
   T: Number + Pi,
 {
-  pub const PI: Self = Self::new(T::PI);
+  pub const PI: Self = Self::from_radians(T::PI);
 
-  pub const PI2: Self = Self::new(T::PI2);
+  pub const PI2: Self = Self::from_radians(T::PI2);
 }
 
 impl<T> Angle<T>
 where
   T: Number,
 {
-  pub const ZERO: Self = Self::new(T::ZERO);
+  pub const ZERO: Self = Self::from_radians(T::ZERO);
 
   #[inline]
-  pub const fn new(radians: T) -> Self {
+  pub const fn from_radians(radians: T) -> Self {
     Self { radians }
   }
 
@@ -45,7 +42,15 @@ where
   where
     T: Radian,
   {
-    Self::new(T::from_degrees(degrees))
+    Self::from_radians(T::from_degrees(degrees))
+  }
+
+  #[inline]
+  pub fn map<F>(self, f: F) -> Self
+  where
+    F: Fn(T) -> T,
+  {
+    Self::from_radians(f(self.radians))
   }
 
   #[inline]
@@ -76,6 +81,31 @@ where
   {
     T::into_degrees(self.radians)
   }
+
+  #[inline]
+  pub fn to_i32(self) -> Angle<i32> {
+    Angle::from_radians(self.radians.to_i32())
+  }
+
+  #[inline]
+  pub fn to_f32(self) -> Angle<f32> {
+    Angle::from_radians(self.radians.to_f32())
+  }
+
+  #[inline]
+  pub fn to_float(self) -> Angle<Float> {
+    Angle::from_radians(self.radians.to_float())
+  }
+}
+
+impl<T> Default for Angle<T>
+where
+  T: Number,
+{
+  #[inline]
+  fn default() -> Self {
+    Self::ZERO
+  }
 }
 
 impl<T> Debug for Angle<T>
@@ -83,7 +113,7 @@ where
   T: Number,
 {
   fn fmt(&self, f: &mut Formatter<'_>) -> Result {
-    write!(f, "Angle[{}]", self.radians)
+    write!(f, "Angle<{}>", self.radians)
   }
 }
 
@@ -92,7 +122,7 @@ where
   T: Number,
 {
   fn fmt(&self, f: &mut Formatter<'_>) -> Result {
-    write!(f, "[{}]", self.radians)
+    Debug::fmt(self, f)
   }
 }
 
@@ -110,6 +140,6 @@ where
 
   #[inline]
   fn neg(self) -> Self::Output {
-    Self::new(self.to_radians().neg())
+    Self::from_radians(self.to_radians().neg())
   }
 }

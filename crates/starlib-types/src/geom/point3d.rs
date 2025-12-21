@@ -1,7 +1,7 @@
-use std::fmt::Debug;
-use std::fmt::Display;
-use std::fmt::Formatter;
-use std::fmt::Result;
+use core::fmt::Debug;
+use core::fmt::Display;
+use core::fmt::Formatter;
+use core::fmt::Result;
 
 use crate::core::Float;
 use crate::geom::Point;
@@ -11,9 +11,6 @@ use crate::traits::Floor;
 use crate::traits::Number;
 use crate::traits::Round;
 use crate::traits::Sqrt;
-
-pub type Point3DF = Point3D<Float>;
-pub type Point3DI = Point3D<i32>;
 
 #[derive(Clone, Copy, Hash, PartialEq, Eq, PartialOrd, Ord)]
 #[repr(C)]
@@ -55,6 +52,21 @@ where
   }
 
   #[inline]
+  pub const fn xy(self) -> Point<T> {
+    Point::new(self.x, self.y)
+  }
+
+  #[inline]
+  pub const fn xz(self) -> Point<T> {
+    Point::new(self.x, self.z)
+  }
+
+  #[inline]
+  pub const fn yz(self) -> Point<T> {
+    Point::new(self.y, self.z)
+  }
+
+  #[inline]
   pub fn dot(self, other: Self) -> T {
     (self.x * other.x) + (self.y * other.y) + (self.z * other.z)
   }
@@ -92,30 +104,6 @@ where
   #[inline]
   pub fn distance_squared(self, other: Self) -> T {
     (self - other).length_squared()
-  }
-
-  #[inline]
-  pub fn div_euclid(self, other: Self) -> Self
-  where
-    T: Euclid,
-  {
-    Self::new(
-      self.x.div_euclid(other.x),
-      self.y.div_euclid(other.y),
-      self.z.div_euclid(other.z),
-    )
-  }
-
-  #[inline]
-  pub fn rem_euclid(self, other: Self) -> Self
-  where
-    T: Euclid,
-  {
-    Self::new(
-      self.x.rem_euclid(other.x),
-      self.y.rem_euclid(other.y),
-      self.z.rem_euclid(other.z),
-    )
   }
 
   #[inline]
@@ -161,13 +149,37 @@ where
   }
 
   #[inline]
-  pub const fn to_array(self) -> [T; 3] {
-    [self.x, self.y, self.z]
+  pub fn clamp(self, min: Self, max: Self) -> Self {
+    self.max(min).min(max)
   }
 
   #[inline]
-  pub fn to_f32(self) -> Point3D<f32> {
-    Point3D::new(self.x.to_f32(), self.y.to_f32(), self.z.to_f32())
+  pub fn div_euclid(self, other: Self) -> Self
+  where
+    T: Euclid,
+  {
+    Self::new(
+      self.x.div_euclid(other.x),
+      self.y.div_euclid(other.y),
+      self.z.div_euclid(other.z),
+    )
+  }
+
+  #[inline]
+  pub fn rem_euclid(self, other: Self) -> Self
+  where
+    T: Euclid,
+  {
+    Self::new(
+      self.x.rem_euclid(other.x),
+      self.y.rem_euclid(other.y),
+      self.z.rem_euclid(other.z),
+    )
+  }
+
+  #[inline]
+  pub const fn to_array(self) -> [T; 3] {
+    [self.x, self.y, self.z]
   }
 
   #[inline]
@@ -176,13 +188,13 @@ where
   }
 
   #[inline]
-  pub fn to_float(self) -> Point3D<Float> {
-    Point3D::new(self.x.to_float(), self.y.to_float(), self.z.to_float())
+  pub fn to_f32(self) -> Point3D<f32> {
+    Point3D::new(self.x.to_f32(), self.y.to_f32(), self.z.to_f32())
   }
 
   #[inline]
-  pub const fn to_2d(self) -> Point<T> {
-    Point::new(self.x, self.y)
+  pub fn to_float(self) -> Point3D<Float> {
+    Point3D::new(self.x.to_float(), self.y.to_float(), self.z.to_float())
   }
 }
 
@@ -201,7 +213,7 @@ where
   T: Number,
 {
   fn fmt(&self, f: &mut Formatter<'_>) -> Result {
-    write!(f, "Point3D[{},{},{}]", self.x, self.y, self.z)
+    write!(f, "Point3D<{},{},{}>", self.x, self.y, self.z)
   }
 }
 
@@ -210,7 +222,7 @@ where
   T: Number,
 {
   fn fmt(&self, f: &mut Formatter<'_>) -> Result {
-    write!(f, "[{},{},{}]", self.x, self.y, self.z)
+    Debug::fmt(self, f)
   }
 }
 

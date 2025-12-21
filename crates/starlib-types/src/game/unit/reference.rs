@@ -105,7 +105,7 @@ impl<'a> TempRef<'a> {
 
   #[inline]
   pub fn point_2d(&self) -> PointF {
-    self.point().to_2d()
+    self.point().xy()
   }
 
   #[inline]
@@ -611,7 +611,7 @@ impl<'a> UnitRef<'a> {
 
   #[inline]
   pub fn point_2d(&self) -> PointF {
-    self.point().to_2d()
+    self.point().xy()
   }
 
   #[inline]

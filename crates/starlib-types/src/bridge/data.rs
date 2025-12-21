@@ -184,7 +184,11 @@ impl UnitTypeData {
     // Default Cost
     // -------------------------------------------------------------------------
 
-    Cost::new(self.mineral_cost, self.vespene_cost, self.food_required as u32)
+    Cost::new(
+      self.mineral_cost,
+      self.vespene_cost,
+      self.food_required as u32,
+    )
   }
 
   #[inline]

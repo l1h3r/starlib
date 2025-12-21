@@ -13,9 +13,9 @@ use crate::game::TagSet;
 #[derive(Debug)]
 pub struct UnitTracker {
   game_data: Arc<GameData>,
-  owned_tags: TagSet<UnitTypeId>,
-  enemy_tags: TagSet<UnitTypeId>,
-  orders: TagSet<AbilityId>,
+  owned_ids: TagSet<UnitTypeId>,
+  enemy_ids: TagSet<UnitTypeId>,
+  abilities: TagSet<AbilityId>,
 }
 
 impl UnitTracker {
@@ -23,34 +23,58 @@ impl UnitTracker {
   pub fn new(game_data: Arc<GameData>) -> Self {
     Self {
       game_data,
-      owned_tags: TagSet::new(),
-      enemy_tags: TagSet::new(),
-      orders: TagSet::new(),
+      owned_ids: TagSet::new(),
+      enemy_ids: TagSet::new(),
+      abilities: TagSet::new(),
     }
   }
 
   #[inline]
-  fn owned(&self, kind: UnitTypeId) -> usize {
-    self.owned_tags.count(&kind)
+  pub fn count_owned(&self, kind: UnitTypeId) -> usize {
+    self.owned_ids.count(&kind)
   }
 
   #[inline]
-  fn enemy(&self, kind: UnitTypeId) -> usize {
-    self.enemy_tags.count(&kind)
+  pub fn count_enemy(&self, kind: UnitTypeId) -> usize {
+    self.enemy_ids.count(&kind)
   }
 
   #[inline]
-  fn orders(&self, kind: AbilityId) -> usize {
-    self.orders.count(&kind)
+  pub fn count_abilities(&self, kind: AbilityId) -> usize {
+    self.abilities.count(&kind)
   }
 
-  fn owned_alias(&self, kind: UnitTypeId) -> usize {
+  pub fn count_owned_alias(&self, kind: UnitTypeId) -> usize {
     match kind {
       // -----------------------------------------------------------------------
-      // Zerg Larva Units
+      // Zerg - Hatchery Buldings
       // -----------------------------------------------------------------------
-      UnitTypeId::Drone => self.owned(UnitTypeId::DroneBurrowed),
-      UnitTypeId::Overlord => self.owned(UnitTypeId::OverlordTransport) + self.owned(UnitTypeId::Overseer),
+
+      // -----------------------------------------------------------------------
+      // Zerg - Lair Buldings
+      // -----------------------------------------------------------------------
+
+      // -----------------------------------------------------------------------
+      // Zerg - Special Buildings
+      // -----------------------------------------------------------------------
+
+      // -----------------------------------------------------------------------
+      // Zerg - Hatchery Units
+      // -----------------------------------------------------------------------
+
+      // -----------------------------------------------------------------------
+      // Zerg - Larva Units
+      // -----------------------------------------------------------------------
+      UnitTypeId::Drone => self.count_owned(UnitTypeId::DroneBurrowed),
+      UnitTypeId::Overlord => self.count_owned(UnitTypeId::OverlordTransport) + self.count_owned(UnitTypeId::Overseer),
+      // -----------------------------------------------------------------------
+      // Zerg - Morph Units
+      // -----------------------------------------------------------------------
+
+      // -----------------------------------------------------------------------
+      // Zerg - Misc. Units
+      // -----------------------------------------------------------------------
+
       // -----------------------------------------------------------------------
       // Fallback
       // -----------------------------------------------------------------------
@@ -59,7 +83,7 @@ impl UnitTracker {
   }
 
   pub fn count_current(&self, kind: UnitTypeId) -> usize {
-    self.owned(kind) + self.owned_alias(kind)
+    self.count_owned(kind) + self.count_owned_alias(kind)
   }
 
   pub fn count_pending(&self, kind: UnitTypeId) -> usize {
@@ -67,15 +91,19 @@ impl UnitTracker {
       return 0;
     };
 
-    self.orders(udata.ability_id())
+    if matches!(kind, UnitTypeId::Zergling) {
+      self.count_abilities(udata.ability_id()) * 2
+    } else {
+      self.count_abilities(udata.ability_id())
+    }
   }
 }
 
 impl Resource for UnitTracker {
   fn tick(&mut self, state: &GameState) {
-    self.owned_tags.clear();
-    self.enemy_tags.clear();
-    self.orders.clear();
+    self.owned_ids.clear();
+    self.enemy_ids.clear();
+    self.abilities.clear();
 
     for unit in state.units() {
       // Ignore all hallucinations
@@ -88,10 +116,10 @@ impl Resource for UnitTracker {
 
       match unit.alliance() {
         Alliance::User => {
-          self.owned_tags.add(kind, utag);
+          self.owned_ids.add(kind, utag);
 
           for order in unit.orders() {
-            self.orders.add(order.ability_id(), utag);
+            self.abilities.add(order.ability_id(), utag);
           }
         }
         Alliance::Ally => {
@@ -101,7 +129,7 @@ impl Resource for UnitTracker {
           // do nothing
         }
         Alliance::Enemy => {
-          self.enemy_tags.add(kind, utag);
+          self.enemy_ids.add(kind, utag);
         }
       }
     }

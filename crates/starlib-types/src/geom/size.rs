@@ -1,16 +1,13 @@
-use std::fmt::Debug;
-use std::fmt::Display;
-use std::fmt::Formatter;
-use std::fmt::Result;
+use core::fmt::Debug;
+use core::fmt::Display;
+use core::fmt::Formatter;
+use core::fmt::Result;
 
 use crate::core::Float;
 use crate::traits::Ceil;
 use crate::traits::Floor;
 use crate::traits::Number;
 use crate::traits::Round;
-
-pub type SizeF = Size<Float>;
-pub type SizeI = Size<i32>;
 
 #[derive(Clone, Copy, Hash, PartialEq, Eq, PartialOrd, Ord)]
 #[repr(C)]
@@ -90,18 +87,33 @@ where
   }
 
   #[inline]
+  pub fn clamp(self, min: Self, max: Self) -> Self {
+    self.max(min).min(max)
+  }
+
+  #[inline]
+  pub fn contains(self, other: Self) -> bool {
+    self.w >= other.w && self.h >= other.h
+  }
+
+  #[inline]
+  pub fn is_empty(self) -> bool {
+    !(self.w > T::ZERO && self.h > T::ZERO)
+  }
+
+  #[inline]
   pub const fn to_array(self) -> [T; 2] {
     [self.w, self.h]
   }
 
   #[inline]
-  pub fn to_f32(self) -> Size<f32> {
-    Size::new(self.w.to_f32(), self.h.to_f32())
+  pub fn to_i32(self) -> Size<i32> {
+    Size::new(self.w.to_i32(), self.h.to_i32())
   }
 
   #[inline]
-  pub fn to_i32(self) -> Size<i32> {
-    Size::new(self.w.to_i32(), self.h.to_i32())
+  pub fn to_f32(self) -> Size<f32> {
+    Size::new(self.w.to_f32(), self.h.to_f32())
   }
 
   #[inline]
@@ -125,7 +137,7 @@ where
   T: Number,
 {
   fn fmt(&self, f: &mut Formatter<'_>) -> Result {
-    write!(f, "Size[{}x{}]", self.w, self.h)
+    write!(f, "Size<{}x{}>", self.w, self.h)
   }
 }
 
@@ -134,6 +146,6 @@ where
   T: Number,
 {
   fn fmt(&self, f: &mut Formatter<'_>) -> Result {
-    write!(f, "[{}x{}]", self.w, self.h)
+    Debug::fmt(self, f)
   }
 }
