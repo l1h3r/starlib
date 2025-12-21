@@ -1,7 +1,7 @@
-use std::fmt::Debug;
-use std::fmt::Display;
-use std::fmt::Formatter;
-use std::fmt::Result;
+use core::fmt::Debug;
+use core::fmt::Display;
+use core::fmt::Formatter;
+use core::fmt::Result;
 
 // -----------------------------------------------------------------------------
 // Player Tag
