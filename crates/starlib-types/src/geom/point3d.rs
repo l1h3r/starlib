@@ -5,7 +5,12 @@ use std::fmt::Result;
 
 use crate::core::Float;
 use crate::geom::Point;
+use crate::traits::Ceil;
+use crate::traits::Euclid;
+use crate::traits::Floor;
 use crate::traits::Number;
+use crate::traits::Round;
+use crate::traits::Sqrt;
 
 pub type Point3DF = Point3D<Float>;
 pub type Point3DI = Point3D<i32>;
@@ -64,7 +69,10 @@ where
   }
 
   #[inline]
-  pub fn length(self) -> T {
+  pub fn length(self) -> T
+  where
+    T: Sqrt,
+  {
     self.dot(self).sqrt()
   }
 
@@ -74,7 +82,10 @@ where
   }
 
   #[inline]
-  pub fn distance(self, other: Self) -> T {
+  pub fn distance(self, other: Self) -> T
+  where
+    T: Sqrt,
+  {
     (self - other).length()
   }
 
@@ -84,7 +95,10 @@ where
   }
 
   #[inline]
-  pub fn div_euclid(self, other: Self) -> Self {
+  pub fn div_euclid(self, other: Self) -> Self
+  where
+    T: Euclid,
+  {
     Self::new(
       self.x.div_euclid(other.x),
       self.y.div_euclid(other.y),
@@ -93,7 +107,10 @@ where
   }
 
   #[inline]
-  pub fn rem_euclid(self, other: Self) -> Self {
+  pub fn rem_euclid(self, other: Self) -> Self
+  where
+    T: Euclid,
+  {
     Self::new(
       self.x.rem_euclid(other.x),
       self.y.rem_euclid(other.y),
@@ -102,17 +119,26 @@ where
   }
 
   #[inline]
-  pub fn ceil(self) -> Self {
+  pub fn ceil(self) -> Self
+  where
+    T: Ceil,
+  {
     Self::new(self.x.ceil(), self.y.ceil(), self.z.ceil())
   }
 
   #[inline]
-  pub fn floor(self) -> Self {
+  pub fn floor(self) -> Self
+  where
+    T: Floor,
+  {
     Self::new(self.x.floor(), self.y.floor(), self.z.floor())
   }
 
   #[inline]
-  pub fn round(self) -> Self {
+  pub fn round(self) -> Self
+  where
+    T: Round,
+  {
     Self::new(self.x.round(), self.y.round(), self.z.round())
   }
 

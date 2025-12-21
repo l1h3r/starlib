@@ -4,7 +4,10 @@ use std::fmt::Formatter;
 use std::fmt::Result;
 
 use crate::core::Float;
+use crate::traits::Ceil;
+use crate::traits::Floor;
 use crate::traits::Number;
+use crate::traits::Round;
 
 pub type SizeF = Size<Float>;
 pub type SizeI = Size<i32>;
@@ -53,17 +56,26 @@ where
   }
 
   #[inline]
-  pub fn ceil(self) -> Self {
+  pub fn ceil(self) -> Self
+  where
+    T: Ceil,
+  {
     Self::new(self.w.ceil(), self.h.ceil())
   }
 
   #[inline]
-  pub fn floor(self) -> Self {
+  pub fn floor(self) -> Self
+  where
+    T: Floor,
+  {
     Self::new(self.w.floor(), self.h.floor())
   }
 
   #[inline]
-  pub fn round(self) -> Self {
+  pub fn round(self) -> Self
+  where
+    T: Round,
+  {
     Self::new(self.w.round(), self.h.round())
   }
 

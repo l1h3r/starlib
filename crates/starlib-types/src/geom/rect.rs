@@ -7,7 +7,10 @@ use std::iter::FusedIterator;
 use crate::core::Float;
 use crate::geom::Point;
 use crate::geom::Size;
+use crate::traits::Ceil;
+use crate::traits::Floor;
 use crate::traits::Number;
+use crate::traits::Round;
 
 pub type RectF = Rect<Float>;
 pub type RectI = Rect<i32>;
@@ -172,17 +175,26 @@ where
   }
 
   #[inline]
-  pub fn round(self) -> Self {
+  pub fn round(self) -> Self
+  where
+    T: Round,
+  {
     Self::new(self.min.round(), self.max.round())
   }
 
   #[inline]
-  pub fn round_expand(self) -> Self {
+  pub fn round_expand(self) -> Self
+  where
+    T: Ceil + Floor,
+  {
     Self::new(self.min.floor(), self.max.ceil())
   }
 
   #[inline]
-  pub fn round_shrink(self) -> Self {
+  pub fn round_shrink(self) -> Self
+  where
+    T: Ceil + Floor,
+  {
     Self::new(self.min.ceil(), self.max.floor())
   }
 

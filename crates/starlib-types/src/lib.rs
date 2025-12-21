@@ -66,3 +66,20 @@ pub use self::traits::FromSc2;
 pub use self::traits::IntoProto;
 pub use self::traits::IntoSc2;
 pub use self::traits::Number;
+
+pub mod num {
+  pub use super::traits::Cast;
+  pub use super::traits::Ceil;
+  pub use super::traits::Cos;
+  pub use super::traits::Euclid;
+  pub use super::traits::Floor;
+  pub use super::traits::One;
+  pub use super::traits::Pi;
+  pub use super::traits::Radian;
+  pub use super::traits::Round;
+  pub use super::traits::Sin;
+  pub use super::traits::Sqrt;
+  pub use super::traits::Tan;
+  pub use super::traits::Two;
+  pub use super::traits::Zero;
+}
