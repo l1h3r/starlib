@@ -10,6 +10,7 @@ use core::hash::Hasher;
 use core::num::ParseFloatError;
 use core::ops::Deref;
 use core::ops::DerefMut;
+use core::ops::Neg;
 use core::str::FromStr;
 
 #[derive(Clone, Copy, Default)]
@@ -188,3 +189,12 @@ op!(Sub::sub(-), SubAssign::sub_assign);
 op!(Mul::mul(*), MulAssign::mul_assign);
 op!(Div::div(/), DivAssign::div_assign);
 op!(Rem::rem(%), RemAssign::rem_assign);
+
+impl Neg for Float {
+  type Output = Self;
+
+  #[inline]
+  fn neg(self) -> Self::Output {
+    Self(self.0.neg())
+  }
+}
